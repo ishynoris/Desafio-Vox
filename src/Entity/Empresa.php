@@ -15,46 +15,46 @@ class Empresa
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
-	/** @var int $id */
-    private $id = null;
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+	/** @var int $iId */
+    private $iId = null;
 
-    #[ORM\Column]
-	/** @var string $nome */
-    private $nome;
+    #[ORM\Column(name: "nome")]
+	/** @var string $sNome */
+    private $sNome;
 
-    #[ORM\Column]
-	/** @var string $cnpj */
-    private $cnpj;
+    #[ORM\Column(name: "cnpj")]
+	/** @var string $sCnpj */
+    private $sCnpj;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: "data_fundacao")]
-	/** @var DateTimeInterface $dataFundacao */
-    private $dataFundacao;
+    #[ORM\Column(name: "data_fundacao", type: Types::DATETIME_MUTABLE)]
+	/** @var DateTimeInterface $tDataFundacao */
+    private $tDataFundacao;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: "data_criacao")]
-	/** @var DateTimeInterface $dataCriacao */
-    private $dataCriacao;
+    #[ORM\Column(name: "data_criacao", type: Types::DATETIME_MUTABLE)]
+	/** @var DateTimeInterface $tDataCriacao */
+    private $tDataCriacao;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, name: "data_atualizacao", nullable: true)]
-	/** @var DateTimeInterface $dataAtualizacao */
-    private $dataAtualizacao = null;
+    #[ORM\Column(name: "data_atualizacao", nullable: true, type: Types::DATETIME_MUTABLE)]
+	/** @var DateTimeInterface $tDataAtualizacao */
+    private $tDataAtualizacao = null;
 
 	/**
 	 * Construtor
 	 *
-	 * @param string $nome
-	 * @param string $cnpj
-	 * @param DateTimeInterface $dataFundacao = null
+	 * @param string $sNome
+	 * @param string $sCnpj
+	 * @param DateTimeInterface $tDataFundacao = null
 	 *
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function __construct(string $nome, string $cnpj, DateTimeInterface $dataFundacao = null)
+	public function __construct(string $sNome, string $sCnpj, DateTimeInterface $tDataFundacao = null)
 	{
-		$this->nome = $nome;
-		$this->cnpj = $cnpj;
-		$this->dataFundacao = $dataFundacao ?? new DateTimeImmutable;
-		$this->dataCriacao = new DateTimeImmutable;
+		$this->sNome = $sNome;
+		$this->sCnpj = $sCnpj;
+		$this->tDataFundacao = $tDataFundacao ?? new DateTimeImmutable;
+		$this->tDataCriacao = new DateTimeImmutable;
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Empresa
 	 */
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->iId;
     }
 
 	/**
@@ -80,7 +80,7 @@ class Empresa
 	 */
     public function getNome(): string
     {
-        return $this->nome;
+        return $this->sNome;
     }
 
 	/**
@@ -93,7 +93,7 @@ class Empresa
 	 */
     public function getCnpjComMascara(): string
     {
-        return $this->cnpj;
+        return $this->sCnpj;
     }
 
 	/**
@@ -104,8 +104,8 @@ class Empresa
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-    public function getDataFundacaoPtbr(): string
+    public function gettDataFundacaoPtbr(): string
     {
-        return $this->dataFundacao->format("d/m/Y");
+        return $this->tDataFundacao->format("d/m/Y");
     }
 }
