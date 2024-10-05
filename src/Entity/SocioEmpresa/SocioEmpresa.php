@@ -79,6 +79,40 @@ class SocioEmpresa implements DTOInterface {
 	}
 
 	/**
+	 * Constrói uma instância de sócio a partir de um array associativo
+	 *
+	 * @param array $aDados
+	 * @return DTOInterface
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public static function createFromArray(array $aDados): DTOInterface {
+		$iEmpresaId = $aDados['empresa_id'] ?? "";
+		if (!is_numeric($iEmpresaId)) {
+			throw new LogicException("É necessário informar o código da empresa");
+		}
+
+		$sNome = $aDados['nome'] ?? "";
+		$sCpf = $aDados['cpf'] ?? "";
+		$sDataVinculo = $aDados['data_vinculo'] ?? "";
+
+		$tDataVinculo = empty($sDataVinculo) ? null : new DateTimeImmutable($sDataVinculo);
+
+		$oSocio = new SocioEmpresa($iEmpresaId, $sNome, $sCpf, $tDataVinculo);
+		$oSocio->iId = is_numeric($aDados['id'] ?? "") ? $aDados['id'] : null;
+
+		$mApagado = $aDados['apagado'] ?? false;
+		if (is_bool($mApagado)) {
+			$oSocio->bApagado = $mApagado;
+		} elseif (is_numeric($mApagado)) {
+			$oSocio->bApagado = $mApagado != 0;
+		}
+
+		return $oSocio;
+	}
+
+	/**
 	 * Retorna o ID do sócio
 	 *
 	 * @return null|int
