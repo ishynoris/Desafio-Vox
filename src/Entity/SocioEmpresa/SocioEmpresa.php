@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\SocioEmpresa;
 
+use App\Entity\Empresa\Empresa;
 use App\Repository\SocioEmpresaRepository;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -9,7 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @package namespace
+ * @package App\Entity\SocioEmpresa
  *
  * Class SocioEmpresa
  *
