@@ -6,9 +6,10 @@ use App\Repository\EmpresaRepository;
 use App\Resources\Interfaces\DTOInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
+use Throwable;
 
 #[ORM\Entity(repositoryClass: EmpresaRepository::class)]
 #[ORM\Table(name: "empresas")]
@@ -56,6 +57,40 @@ class Empresa implements DTOInterface
 		$this->sCnpj = $sCnpj;
 		$this->tDataFundacao = $tDataFundacao ?? new DateTimeImmutable;
 		$this->tDataCriacao = new DateTimeImmutable;
+	}
+
+	/**
+	 * Cria uma instância de Empresa a partir de um array associativo
+	 *
+	 * @param array $aEmpresa
+	 * @return Empresa
+	 * @throws LogicException
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public static function createFromArray(array $aEmpresa): Empresa 
+	{
+		$sNome = $aEmpresa['nome'] ?? "";
+		if (empty($sNome)) {
+			throw new LogicException("Informe o nome da empresa");
+		}
+
+		$sCnpj = str_replace([ ".", "-", "/"], "", $aEmpresa['cnpj'] ?? "");
+		if (empty($sCnpj)) {
+			throw new LogicException("Informe o CNPJ da empresa");
+		}
+
+		try {
+			$sDataFundacao = $aEmpresa['data_fundcao'] ?? "";
+			$tDataFundacao = empty($sDataFundacao) ? null : new DateTimeImmutable($sDataFundacao);
+		} catch (Throwable $e) {
+			$tDataFundacao = null;
+		}
+
+		$oEmpresa = new Empresa($sNome, $sCnpj, $tDataFundacao);
+		$oEmpresa->iId = is_int($aEmpresa['id'] ?? "") ? $aEmpresa['id'] : null;
+		return $oEmpresa;
 	}
 
 	/**
