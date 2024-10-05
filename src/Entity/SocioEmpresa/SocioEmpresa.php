@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 
 /**
  * @package App\Entity\SocioEmpresa
@@ -54,6 +55,10 @@ class SocioEmpresa implements DTOInterface {
 	/** @var DateTimeInterface $tDataAtualizacao */
     private $tDataAtualizacao = null;
 
+	#[ORM\Column("apagado", type: Types::BOOLEAN, options: [ 'default' => false ])]
+	/** @var bool $bApagado */
+	private $bApagado;
+
 	/**
 	 * Construtor
 	 *
@@ -66,9 +71,9 @@ class SocioEmpresa implements DTOInterface {
 	 * @since 1.0.0
 	 */
 	public function __construct(int $iEmpresaId, string $sNome, string $sCpf, DateTimeInterface $tDataVinculo = null) {
-		$this->iEmpresaId = $iEmpresaId;
-		$this->sNome = $sNome;
-		$this->sCpf = $sCpf;
+		$this->setEmpresaId($iEmpresaId);
+		$this->setNome($sNome);
+		$this->setCpf($sCpf);
 		$this->tDataVinculo = $tDataVinculo ?? new DateTimeImmutable;
 		$this->tDataCriacao = new DateTimeImmutable;
 	}
@@ -86,6 +91,58 @@ class SocioEmpresa implements DTOInterface {
 	}
 
 	/**
+	 * Altera o ID da empresa que o sócio faz parte
+	 *
+	 * @param int $iEmpresaId
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function setEmpresaId(int $iEmpresaId) {
+		if ($iEmpresaId <= 0) {
+			throw new LogicException("O código da empresa é inválido");
+		}
+		$this->iEmpresaId = $iEmpresaId;
+	}
+
+	/**
+	 * Altera o nome do sócio
+	 *
+	 * @param string $sNome
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function setNome(string $sNome) {
+		if (empty($sNome)) {
+			throw new LogicException("Informe o nome do sócio");
+		}
+
+		$this->sNome = $sNome;
+	}
+
+	/**
+	 * Altera o CPF do sócio
+	 *
+	 * @param string $sCpf
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function setCpf(string $sCpf) {
+		$sCpf = str_replace([ ".", "-" ], "", $sCpf);
+
+		if (empty($sCpf)) {
+			throw new LogicException("Informe o CPF do sócio");
+		}
+
+		if (strlen($sCpf) != 11) {
+			throw new LogicException("CPF inválido");
+		}
+		$this->sCpf = $sCpf;
+	}
+
+	/**
 	 * Retorna o CPF com máscara
 	 *
 	 * @return string
@@ -95,6 +152,47 @@ class SocioEmpresa implements DTOInterface {
 	 */
 	private function getCpfComMascara(): string {
 		return $this->sCpf;
+	}
+
+	/**
+	 * Apaga um sócio (logicamente)
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function apagar() {
+		$this->bApagado = true;
+		$this->tDataAtualizacao = new DateTimeImmutable;
+	}
+
+	/**
+	 * Atualiza os campos do sócio
+	 *
+	 * @param array $aCampos
+	 * @return SocioEmpresa
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function atualizarCampos(array $aCampos): SocioEmpresa {
+		if (is_numeric($aCampos['empresa_id'])) {
+			$this->setEmpresaId($aCampos['empresa_id']);
+		}
+
+		if (!empty($aCampos['nome'])) {
+			$this->setNome($aCampos['nome']);
+		}
+
+		if (!empty($aCampos['cpf'])) {
+			$this->setCpf($aCampos['cpf']);
+		}
+
+		if (!empty($aCampos['data_vinculo'])) {
+			$this->tDataVinculo = new DateTimeImmutable($aCampos['data_vinculo']);
+		}
+
+		$this->tDataAtualizacao = new DateTimeImmutable;
+		return $this;
 	}
 
 	/**
