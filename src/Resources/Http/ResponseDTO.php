@@ -3,6 +3,7 @@
 namespace App\Resources\Http;
 
 use App\Resources\Interfaces\DTOInterface;
+use Countable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -25,11 +26,15 @@ class ResponseDTO extends JsonResponse {
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function __construct(DTOInterface $oDTO, int $iCodigo = 200) {
-		$aConteudo = [
-			'message' => "Ok",
-			'data' => $oDTO->toArray(),
-		];
+	public function __construct(DTOInterface $oDTO, string $sMensagem = "Ok", int $iCodigo = 200) {
+		$aConteudo = [];
+		if ($oDTO instanceof Countable) {
+			$aConteudo['total'] = $oDTO->count();
+		}
+
+		$aConteudo['message'] = $sMensagem;
+		$aConteudo['data'] = $oDTO->toArray();
+
 		parent::__construct($aConteudo, $iCodigo);
 	}
 }

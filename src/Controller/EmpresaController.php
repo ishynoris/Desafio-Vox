@@ -89,7 +89,7 @@ class EmpresaController extends AbstractController
 			$oEmpresa = Empresa::createFromArray($oRequest->toArray());
 			$this->oRepository->salvar($oEmpresa);
 
-			$oResposta = new ResponseDTO($oEmpresa);
+			$oResposta = new ResponseDTO($oEmpresa, "Empresa cadastrada com sucesso", 201);
 		} catch (Throwable $e) {
 			$oResposta = new ResponseException($e);
 		}
@@ -113,7 +113,7 @@ class EmpresaController extends AbstractController
 			$aEmpresa = $oRequest->toArray();
 			$oEmpresa = $this->oRepository->atualizar($iId, $aEmpresa);
 
-			$oResposta = new ResponseDTO($oEmpresa);
+			$oResposta = new ResponseDTO($oEmpresa, "Empresa atualizada com sucesso");
 		} catch (Throwable $e) {
 			$oResposta = new ResponseException($e);
 		}
@@ -134,7 +134,7 @@ class EmpresaController extends AbstractController
 		try {
 			$oEmpresa = $this->oRepository->apagar($iId);
 
-			$oResposta = new ResponseDTO($oEmpresa);
+			$oResposta = new ResponseDTO($oEmpresa, "Empresa apagada com sucesso");
 		} catch (Throwable $e) {
 			$oResposta = new ResponseException($e);
 		}
