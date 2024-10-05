@@ -4,13 +4,16 @@ namespace App\Repository;
 
 use App\Entity\Empresa\Empresa;
 use App\Entity\Empresa\EmpresaList;
+use App\Resources\Trait\AutoCommitTrait;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 
-class EmpresaRepository extends ServiceEntityRepository
-{
+class EmpresaRepository extends ServiceEntityRepository {
+
+	use AutoCommitTrait;
+
 	/**
 	 * Construtor
 	 *
@@ -115,19 +118,5 @@ class EmpresaRepository extends ServiceEntityRepository
 			throw new EntityNotFoundException("Não foi possível encontrar a empresa pelo ID {$iId}");
 		}
 		return $oEmpresa;
-	}
-
-	/**
-	 * Realiza o auto commit das alterações
-	 *
-	 * @param bool $autoCommit
-	 *
-	 * @author Anailson Mota mota.a.santos@gmail.com
-	 * @since 1.0.0
-	 */
-	private function autoCommit(bool $autoCommit) {
-		if ($autoCommit) {
-			$this->getEntityManager()->flush();
-		}
 	}
 }

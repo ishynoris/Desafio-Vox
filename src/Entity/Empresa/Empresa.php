@@ -85,12 +85,12 @@ class Empresa implements DTOInterface
 		}
 
 		$oEmpresa = new Empresa($sNome, $sCnpj, $tDataFundacao);
-		$oEmpresa->iId = is_int($aEmpresa['id'] ?? "") ? $aEmpresa['id'] : null;
+		$oEmpresa->iId = is_numeric($aEmpresa['id'] ?? "") ? $aEmpresa['id'] : null;
 
 		$mApagado = $aEmpresa['apagado'] ?? null;
 		if (is_bool($mApagado)) {
 			$oEmpresa->bApagado = $mApagado;
-		} elseif (is_int($mApagado)) {
+		} elseif (is_numeric($mApagado)) {
 			$oEmpresa->bApagado !== 0;
 		}
 		return $oEmpresa;
@@ -112,6 +112,11 @@ class Empresa implements DTOInterface
 		
 		if (!empty($aDados['cnpj'])) {
 			$this->setCnpj($aDados['cnpj']);
+		}
+
+		$sDataFundacao = $aDados['data_fundacao'] ?? "";
+		if (!empty($sDataFundacao)) {
+			$this->tDataFundacao = new DateTimeImmutable($sDataFundacao);
 		}
 
 		$this->setDataAtualizacao(new DateTimeImmutable);
