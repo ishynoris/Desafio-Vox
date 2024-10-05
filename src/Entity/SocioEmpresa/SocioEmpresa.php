@@ -4,6 +4,7 @@ namespace App\Entity\SocioEmpresa;
 
 use App\Entity\Empresa\Empresa;
 use App\Repository\SocioEmpresaRepository;
+use App\Resources\Interfaces\DTOInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
@@ -20,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  */ 
  #[ORM\Entity(repositoryClass: SocioEmpresaRepository::class)]
  #[ORM\Table(name: "socios_empresa")]
-class SocioEmpresa { 
+class SocioEmpresa implements DTOInterface { 
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -85,14 +86,34 @@ class SocioEmpresa {
 	}
 
 	/**
-	 * Retorna o ID da empresa
+	 * Retorna o CPF com máscara
 	 *
-	 * @return int
+	 * @return string
 	 *
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function getEmpresaId(): int {
-		return $this->iEmpresaId;
+	private function getCpfComMascara(): string {
+		return $this->sCpf;
+	}
+
+	/**
+	 * Retorna as informações do sócio num array associativo
+	 *
+	 * @return array
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function toArray(): array {
+		return [
+			'id' => $this->iId,
+			'empresa_id' => $this->iEmpresaId,
+			'nome' => $this->sNome,
+			'cpf' => $this->sCpf,
+			'cpf_mascara' => $this->getCpfComMascara(),
+			'data_vinculo' => $this->tDataVinculo->format("Y-m-d"),
+			'data_vinculo_ptbr' => $this->tDataVinculo->format("d/m/Y"),
+		];
 	}
 }
