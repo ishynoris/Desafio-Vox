@@ -3,6 +3,7 @@
 namespace App\Entity\Empresa;
 
 use App\Repository\EmpresaRepository;
+use App\Resources\Interfaces\DTOInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Type;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmpresaRepository::class)]
 #[ORM\Table(name: "empresas")]
-class Empresa
+class Empresa implements DTOInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -104,8 +105,27 @@ class Empresa
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-    public function gettDataFundacaoPtbr(): string
+    public function getDataFundacaoPtbr(): string
     {
         return $this->tDataFundacao->format("d/m/Y");
     }
+
+	/**
+	 * Retorna os dados da emrpesa convertidos num array
+	 *
+	 * @return array
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function toArray(): array {
+		return [
+			'id' => $this->getId(),
+			'nome' => $this->getNome(),
+			'cnpj' => $this->sCnpj,
+			'cnpj_mascara' => $this->getCnpjComMascara(),
+			'data_fundacao' => $this->tDataFundacao->format("Y-m-d"),
+			'data_fundacao_ptbr' => $this->getDataFundacaoPtbr(),
+		];
+	}
 }
