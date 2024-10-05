@@ -50,6 +50,13 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+		"make-migration": [
+			"symfony console make:migration",
+			"@run-migrations"
+		],
+		"run-migrations": {
+			"run": "symfony console doctrine:migrations:migrate"
+		},
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
