@@ -87,8 +87,8 @@ class Empresa implements DTOInterface
 		$oEmpresa = new Empresa($sNome, $sCnpj, $tDataFundacao);
 		$oEmpresa->iId = is_int($aEmpresa['id'] ?? "") ? $aEmpresa['id'] : null;
 
-		$mApagado = $aEmpresa['apagado'];
-		if (is_bool($aEmpresa['apagado'])) {
+		$mApagado = $aEmpresa['apagado'] ?? null;
+		if (is_bool($mApagado)) {
 			$oEmpresa->bApagado = $mApagado;
 		} elseif (is_int($mApagado)) {
 			$oEmpresa->bApagado !== 0;
