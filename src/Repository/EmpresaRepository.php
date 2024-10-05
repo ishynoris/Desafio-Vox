@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Empresa\Empresa;
 use App\Entity\Empresa\EmpresaList;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,26 @@ class EmpresaRepository extends ServiceEntityRepository
 		$this->getEntityManager()->persist($oEmpresa);
 		$this->autoCommit($autoCommit);
 		return $autoCommit ? $oEmpresa->getId() : null;
+	}
+
+	/**
+	 * Atualiza os dados de uma determinada empresa
+	 *
+	 * @param int $iId
+	 * @param array $aDados
+	 * @param bool $autoCommit = true
+	 * @return Empresa
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function atualizar(int $iId, array $aDados, bool $autoCommit = true): Empresa {
+		$oEmpresa = $this->getById($iId);
+		$oEmpresa->atualizarCampos($aDados);
+
+		$this->getEntityManager()->persist($oEmpresa);
+		$this->autoCommit($autoCommit);
+		return $oEmpresa;
 	}
 
 	/**

@@ -51,10 +51,9 @@ class Empresa implements DTOInterface
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function __construct(string $sNome, string $sCnpj, DateTimeInterface $tDataFundacao = null)
-	{
-		$this->sNome = $sNome;
-		$this->sCnpj = $sCnpj;
+	public function __construct(string $sNome, string $sCnpj, DateTimeInterface $tDataFundacao = null) {
+		$this->setNome($sNome);
+		$this->setCnpj($sCnpj);
 		$this->tDataFundacao = $tDataFundacao ?? new DateTimeImmutable;
 		$this->tDataCriacao = new DateTimeImmutable;
 	}
@@ -69,17 +68,9 @@ class Empresa implements DTOInterface
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public static function createFromArray(array $aEmpresa): Empresa 
-	{
+	public static function createFromArray(array $aEmpresa): Empresa {
 		$sNome = $aEmpresa['nome'] ?? "";
-		if (empty($sNome)) {
-			throw new LogicException("Informe o nome da empresa");
-		}
-
-		$sCnpj = str_replace([ ".", "-", "/"], "", $aEmpresa['cnpj'] ?? "");
-		if (empty($sCnpj)) {
-			throw new LogicException("Informe o CNPJ da empresa");
-		}
+		$sCnpj = $aEmpresa['cnpj'] ?? "";
 
 		try {
 			$sDataFundacao = $aEmpresa['data_fundcao'] ?? "";
@@ -94,6 +85,28 @@ class Empresa implements DTOInterface
 	}
 
 	/**
+	 * Atualiza os campos da empresa
+	 *
+	 * @param array $aDados
+	 * @return Empresa
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function atualizarCampos(array $aDados): Empresa {
+		if (!empty($aDados['nome'])) {
+			$this->setNome($aDados['nome']);
+		}
+		
+		if (!empty($aDados['cnpj'])) {
+			$this->setCnpj($aDados['cnpj']);
+		}
+
+		$this->setDataAtualizacao(new DateTimeImmutable);
+		return $this;
+	}
+
+	/**
 	 * Retorna o ID da empresa
 	 *
 	 * @return null|int
@@ -101,8 +114,7 @@ class Empresa implements DTOInterface
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->iId;
     }
 
@@ -114,10 +126,25 @@ class Empresa implements DTOInterface
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-    public function getNome(): string
-    {
+    public function getNome(): string {
         return $this->sNome;
     }
+
+	/**
+	 * Altera o nome da empresa
+	 *
+	 * @param string $sNome
+	 * @throws LogicException
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function setNome(string $sNome) {
+		if (empty($sNome)) {
+			throw new LogicException("O nome da empresa não deve ser em branco");
+		}
+		$this->sNome = $sNome;
+	}
 
 	/**
 	 * Retorna o CNPJ da empresa com a máscara aplicada
@@ -127,10 +154,30 @@ class Empresa implements DTOInterface
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-    public function getCnpjComMascara(): string
-    {
+    public function getCnpjComMascara(): string {
         return $this->sCnpj;
     }
+
+	/**
+	 * Altera o CNPJ da empresa
+	 *
+	 * @param string $sNome
+	 * @throws LogicException
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function setCnpj(string $sCnpj) {
+		$sCnpj = str_replace([ ".", "-", "/"], "", $sCnpj);
+		if (empty($sCnpj)) {
+			throw new LogicException("O CNPJ da empresa não deve ser em branco");
+		}
+
+		if (strlen($sCnpj) != 14) {
+			throw new LogicException("O CNPJ da empresa não deve ser em branco");
+		}
+		$this->sCnpj = $sCnpj;
+	}
 
 	/**
 	 * Retorna a data de fundação da empresa formatada
@@ -140,10 +187,21 @@ class Empresa implements DTOInterface
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-    public function getDataFundacaoPtbr(): string
-    {
+    public function getDataFundacaoPtbr(): string {
         return $this->tDataFundacao->format("d/m/Y");
     }
+
+	/**
+	 * Altera data de atualização da empresa
+	 *
+	 * @param DateTimeInterface $tDataAtualizacao
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function setDataAtualizacao(DateTimeInterface $tDataAtualizacao) {
+		$this->tDataAtualizacao = $tDataAtualizacao;
+	}
 
 	/**
 	 * Retorna os dados da emrpesa convertidos num array
