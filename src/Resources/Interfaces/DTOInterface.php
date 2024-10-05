@@ -3,7 +3,7 @@
 namespace App\Resources\Interfaces;
 
 /**
- * @package namespace
+ * @package App\Resources\Interfaces
  *
  * Class DTOInterface
  *
@@ -12,6 +12,17 @@ namespace App\Resources\Interfaces;
  * @version 1.0.0
  */ 
 interface DTOInterface { 
+
+	/**
+	 * Cria uma instância de DTOInterface a partir de um array associativo
+	 *
+	 * @param array $aDados
+	 * @return DTOInterface
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public static function createFromArray(array $aDados): DTOInterface;
 
 	/**
 	 * Retorna os elementos como um array
