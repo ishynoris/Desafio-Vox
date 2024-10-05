@@ -21,7 +21,7 @@ use LogicException;
  * @version 1.0.0
  */ 
  #[ORM\Entity(repositoryClass: SocioEmpresaRepository::class)]
- #[ORM\Table(name: "socios_empresa")]
+ #[ORM\Table(name: "socios_empresa", )]
 class SocioEmpresa implements DTOInterface { 
 
     #[ORM\Id]
@@ -30,10 +30,10 @@ class SocioEmpresa implements DTOInterface {
 	/** @var int $iId */
     private $iId = null;
 
-	#[ORM\OneToOne(targetEntity: Empresa::class, )]
-	#[ORM\JoinColumn(name: "empresa_id", referencedColumnName: "id")]
-	/** @var int $iEmpresaId */
-	private $iEmpresaId;
+	#[ORM\ManyToOne(targetEntity: Empresa::class )]
+	#[ORM\JoinColumn(name: "empresa_id", referencedColumnName: "id", nullable: false)]
+	/** @var Empresa $oEmpresa */
+	private $oEmpresa;
 
 	#[ORM\Column(name: "nome")]
 	/** @var string $sNome */
@@ -43,7 +43,7 @@ class SocioEmpresa implements DTOInterface {
 	/** @var string $sCpf */
 	private $sCpf;
 
-    #[ORM\Column(name: "data_vinculo", type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: "data_vinculo", type: Types::DATE_MUTABLE)]
 	/** @var DateTimeInterface $tDataVinculo */
     private $tDataVinculo;
 
@@ -62,7 +62,7 @@ class SocioEmpresa implements DTOInterface {
 	/**
 	 * Construtor
 	 *
-	 * @param int $iEmpresaId
+	 * @param Empresa $oEmpresa
 	 * @param string $sNome
 	 * @param string $sCpf
 	 * @param DateTimeInterface $tDataVinculo = null
@@ -70,8 +70,8 @@ class SocioEmpresa implements DTOInterface {
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function __construct(int $iEmpresaId, string $sNome, string $sCpf, DateTimeInterface $tDataVinculo = null) {
-		$this->setEmpresaId($iEmpresaId);
+	public function __construct(Empresa $oEmpresa, string $sNome, string $sCpf, DateTimeInterface $tDataVinculo = null) {
+		$this->oEmpresa = $oEmpresa;
 		$this->setNome($sNome);
 		$this->setCpf($sCpf);
 		$this->tDataVinculo = $tDataVinculo ?? new DateTimeImmutable;
@@ -88,8 +88,8 @@ class SocioEmpresa implements DTOInterface {
 	 * @since 1.0.0
 	 */
 	public static function createFromArray(array $aDados): DTOInterface {
-		$iEmpresaId = $aDados['empresa_id'] ?? "";
-		if (!is_numeric($iEmpresaId)) {
+		$oEmpresa = $aDados['empresa'] ?? null;
+		if (!$oEmpresa instanceof Empresa) {
 			throw new LogicException("É necessário informar o código da empresa");
 		}
 
@@ -99,7 +99,7 @@ class SocioEmpresa implements DTOInterface {
 
 		$tDataVinculo = empty($sDataVinculo) ? null : new DateTimeImmutable($sDataVinculo);
 
-		$oSocio = new SocioEmpresa($iEmpresaId, $sNome, $sCpf, $tDataVinculo);
+		$oSocio = new SocioEmpresa($oEmpresa, $sNome, $sCpf, $tDataVinculo);
 		$oSocio->iId = is_numeric($aDados['id'] ?? "") ? $aDados['id'] : null;
 
 		$mApagado = $aDados['apagado'] ?? false;
@@ -127,16 +127,13 @@ class SocioEmpresa implements DTOInterface {
 	/**
 	 * Altera o ID da empresa que o sócio faz parte
 	 *
-	 * @param int $iEmpresaId
+	 * @param Empresa $oEmpresa
 	 *
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function setEmpresaId(int $iEmpresaId) {
-		if ($iEmpresaId <= 0) {
-			throw new LogicException("O código da empresa é inválido");
-		}
-		$this->iEmpresaId = $iEmpresaId;
+	public function setEmpresa(Empresa $oEmpresa) {
+		$this->oEmpresa = $oEmpresa;
 	}
 
 	/**
@@ -209,8 +206,9 @@ class SocioEmpresa implements DTOInterface {
 	 * @since 1.0.0
 	 */
 	public function atualizarCampos(array $aCampos): SocioEmpresa {
-		if (is_numeric($aCampos['empresa_id'])) {
-			$this->setEmpresaId($aCampos['empresa_id']);
+		$mEmpresa = $aCampos['empresa'] ?? null;
+		if ($mEmpresa instanceof Empresa) {
+			$this->setEmpresa($mEmpresa);
 		}
 
 		if (!empty($aCampos['nome'])) {
@@ -240,12 +238,17 @@ class SocioEmpresa implements DTOInterface {
 	public function toArray(): array {
 		return [
 			'id' => $this->iId,
-			'empresa_id' => $this->iEmpresaId,
+			'empresa_id' => $this->oEmpresa->getId(),
+			'empresa' => $this->oEmpresa->toArray(),
 			'nome' => $this->sNome,
 			'cpf' => $this->sCpf,
 			'cpf_mascara' => $this->getCpfComMascara(),
 			'data_vinculo' => $this->tDataVinculo->format("Y-m-d"),
 			'data_vinculo_ptbr' => $this->tDataVinculo->format("d/m/Y"),
+			'data_criacao' => $this->tDataCriacao->format("Y-m-d H:i:s"),
+			'data_criacao_ptbr' => $this->tDataCriacao->format("d/m/Y H:i:s"),
+			'data_atualizacao' => $this->tDataAtualizacao->format("Y-m-d H:i:s"),
+			'data_atualizacao_ptbr' => $this->tDataAtualizacao->format("d/m/Y H:i:s"),
 		];
 	}
 }

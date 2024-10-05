@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241004201539 extends AbstractMigration
+final class Version20241005213659 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,8 +20,8 @@ final class Version20241004201539 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE socios_empresa (id INT NOT NULL, empresa_id INT DEFAULT NULL, nome VARCHAR(255) NOT NULL, cpf VARCHAR(255) NOT NULL, data_vinculo TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, data_criacao TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, data_atualizacao TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_5A1C32DE521E1991 ON socios_empresa (empresa_id)');
+        $this->addSql('CREATE TABLE socios_empresa (id INT NOT NULL, empresa_id INT NOT NULL, nome VARCHAR(255) NOT NULL, cpf VARCHAR(255) NOT NULL, data_vinculo DATE NOT NULL, data_criacao TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, data_atualizacao TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, apagado BOOLEAN DEFAULT false NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_5A1C32DE521E1991 ON socios_empresa (empresa_id)');
         $this->addSql('ALTER TABLE socios_empresa ADD CONSTRAINT FK_5A1C32DE521E1991 FOREIGN KEY (empresa_id) REFERENCES empresas (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
