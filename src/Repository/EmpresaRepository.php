@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Empresa;
+use App\Entity\Empresa\Empresa;
+use App\Entity\Empresa\EmpresaList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 
 class EmpresaRepository extends ServiceEntityRepository
@@ -40,18 +42,34 @@ class EmpresaRepository extends ServiceEntityRepository
 	/**
 	 * Retorna um array com todas as empresas
 	 *
-	 * @return array
+	 * @return EmpresaList
 	 *
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	public function findAll(): array
-	{
-		return $this->createQueryBuilder('e')
-               ->orderBy('e.id', 'ASC')
-               ->setMaxResults(10)
-               ->getQuery()
-               ->getResult();
+	public function getTodas(): EmpresaList {
+		$aEmpresa = $this->createQueryBuilder('e')
+			->orderBy('e.iId', 'ASC')
+			->getQuery()
+			->getResult();
+		return EmpresaList::createFromArray($aEmpresa);
+	}
+
+	/**
+	 * Retorna a Empresa pelo ID informado
+	 *
+	 * @return Empresa
+	 * @throws EntityNotFoundException
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function getById(int $iId): Empresa {
+		$oEmpresa = parent::find($iId);
+		if (is_null($oEmpresa)) {
+			throw new EntityNotFoundException("Não foi possível encontrar a empresa pelo ID {$iId}");
+		}
+		return $oEmpresa;
 	}
 
 	/**
