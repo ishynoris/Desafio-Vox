@@ -61,6 +61,26 @@ class EmpresaRepository extends ServiceEntityRepository
 	}
 
 	/**
+	 * Atualiza os dados de uma determinada empresa
+	 *
+	 * @param int $iId
+	 * @param array $aDados
+	 * @param bool $autoCommit = true
+	 * @return Empresa
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function apagar(int $iId, bool $autoCommit = true): Empresa {
+		$oEmpresa = $this->getById($iId);
+		$oEmpresa->apagar();
+
+		$this->getEntityManager()->persist($oEmpresa);
+		$this->autoCommit($autoCommit);
+		return $oEmpresa;
+	}
+
+	/**
 	 * Retorna um array com todas as empresas
 	 *
 	 * @return EmpresaList
@@ -70,6 +90,7 @@ class EmpresaRepository extends ServiceEntityRepository
 	 */
 	public function getTodas(): EmpresaList {
 		$aEmpresa = $this->createQueryBuilder('e')
+			->where('e.bApagado = false')
 			->orderBy('e.iId', 'ASC')
 			->getQuery()
 			->getResult();
@@ -86,7 +107,10 @@ class EmpresaRepository extends ServiceEntityRepository
 	 * @since 1.0.0
 	 */
 	public function getById(int $iId): Empresa {
-		$oEmpresa = parent::find($iId);
+		$oEmpresa = parent::findOneBy([
+			'iId' => $iId,
+			'bApagado' => false
+		]);
 		if (is_null($oEmpresa)) {
 			throw new EntityNotFoundException("Não foi possível encontrar a empresa pelo ID {$iId}");
 		}

@@ -29,6 +29,10 @@ class Empresa implements DTOInterface
 	/** @var string $sCnpj */
     private $sCnpj;
 
+	#[ORM\Column(name: "apagado", type: Types::BOOLEAN, options: [ 'default' => false ])]
+	/** @var bool $bApagado */
+	private $bApagado;
+
     #[ORM\Column(name: "data_fundacao", type: Types::DATETIME_MUTABLE)]
 	/** @var DateTimeInterface $tDataFundacao */
     private $tDataFundacao;
@@ -56,6 +60,7 @@ class Empresa implements DTOInterface
 		$this->setCnpj($sCnpj);
 		$this->tDataFundacao = $tDataFundacao ?? new DateTimeImmutable;
 		$this->tDataCriacao = new DateTimeImmutable;
+		$this->bApagado = false;
 	}
 
 	/**
@@ -81,6 +86,13 @@ class Empresa implements DTOInterface
 
 		$oEmpresa = new Empresa($sNome, $sCnpj, $tDataFundacao);
 		$oEmpresa->iId = is_int($aEmpresa['id'] ?? "") ? $aEmpresa['id'] : null;
+
+		$mApagado = $aEmpresa['apagado'];
+		if (is_bool($aEmpresa['apagado'])) {
+			$oEmpresa->bApagado = $mApagado;
+		} elseif (is_int($mApagado)) {
+			$oEmpresa->bApagado !== 0;
+		}
 		return $oEmpresa;
 	}
 
@@ -177,6 +189,29 @@ class Empresa implements DTOInterface
 			throw new LogicException("O CNPJ da empresa não deve ser em branco");
 		}
 		$this->sCnpj = $sCnpj;
+	}
+
+	/**
+	 * Apaga uma empresa (logicamente)
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function apagar() {
+		$this->bApagado = true;
+		$this->setDataAtualizacao(new DateTimeImmutable);
+	}
+
+	/**
+	 * Verifica se uma determinada empresa está apagada
+	 *
+	 * @return bool
+	 *
+	 * @author Anailson Mota mota.a.santos@gmail.com
+	 * @since 1.0.0
+	 */
+	public function isApagado(): bool {
+		return $this->bApagado;
 	}
 
 	/**
