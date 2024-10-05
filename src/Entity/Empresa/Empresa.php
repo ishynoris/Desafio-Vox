@@ -253,12 +253,19 @@ class Empresa implements DTOInterface
 	 */
 	public function toArray(): array {
 		return [
-			'id' => $this->getId(),
-			'nome' => $this->getNome(),
-			'cnpj' => $this->sCnpj,
-			'cnpj_mascara' => $this->getCnpjComMascara(),
-			'data_fundacao' => $this->tDataFundacao->format("Y-m-d"),
-			'data_fundacao_ptbr' => $this->getDataFundacaoPtbr(),
+			'meta_data' => [
+				'get' => "/empresa/{$this->getId()}",
+				'put' => "/empresa/{$this->getId()}",
+				'delete' => "/empresa/{$this->getId()}",
+			],
+			'empresa' => [
+				'id' => $this->getId(),
+				'nome' => $this->getNome(),
+				'cnpj' => $this->sCnpj,
+				'cnpj_mascara' => $this->getCnpjComMascara(),
+				'data_fundacao' => $this->tDataFundacao->format("Y-m-d"),
+				'data_fundacao_ptbr' => $this->getDataFundacaoPtbr(),
+			]
 		];
 	}
 }
