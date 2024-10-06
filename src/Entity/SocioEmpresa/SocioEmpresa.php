@@ -39,7 +39,7 @@ class SocioEmpresa implements DTOInterface {
 	/** @var string $sNome */
 	private $sNome;
 
-	#[ORM\Column(name: "cpf")]
+	#[ORM\Column(name: "cpf", length: 11)]
 	/** @var string $sCpf */
 	private $sCpf;
 
@@ -182,7 +182,13 @@ class SocioEmpresa implements DTOInterface {
 	 * @since 1.0.0
 	 */
 	private function getCpfComMascara(): string {
-		return $this->sCpf;
+		$aPartes = [
+			substr($this->sCpf, 0, 3),
+			substr($this->sCpf, 3, 3),
+			substr($this->sCpf, 6, 3),
+			substr($this->sCpf, 9, 2),
+		];
+		return sprintf("%s.%s.%s-%s", ...$aPartes);
 	}
 
 	/**

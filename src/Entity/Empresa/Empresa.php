@@ -25,7 +25,7 @@ class Empresa implements DTOInterface
 	/** @var string $sNome */
     private $sNome;
 
-    #[ORM\Column(name: "cnpj")]
+    #[ORM\Column(name: "cnpj", length: 14)]
 	/** @var string $sCnpj */
     private $sCnpj;
 
@@ -33,7 +33,7 @@ class Empresa implements DTOInterface
 	/** @var bool $bApagado */
 	private $bApagado;
 
-    #[ORM\Column(name: "data_fundacao", type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: "data_fundacao", type: Types::DATE_MUTABLE)]
 	/** @var DateTimeInterface $tDataFundacao */
     private $tDataFundacao;
 
@@ -172,7 +172,14 @@ class Empresa implements DTOInterface
 	 * @since 1.0.0
 	 */
     public function getCnpjComMascara(): string {
-        return $this->sCnpj;
+		$aPartes = [
+			substr($this->sCnpj, 0, 2),
+			substr($this->sCnpj, 2, 3),
+			substr($this->sCnpj, 5, 3),
+			substr($this->sCnpj, 8, 4),
+			substr($this->sCnpj, 11, 2),
+		];
+        return sprintf("%s.%s.%s/%s-%s", ...$aPartes);
     }
 
 	/**
@@ -252,6 +259,12 @@ class Empresa implements DTOInterface
 	 * @since 1.0.0
 	 */
 	public function toArray(): array {
+		$sDataAtualizacao = $sDataAtualizacaoPtbr = null;
+		if (!empty($this->tDataAtualizacao)) {
+			$sDataAtualizacao = $this->tDataAtualizacao->format("Y-m-d H:s:s");
+			$sDataAtualizacaoPtbr = $this->tDataAtualizacao->format("d/m/Y H:s:s");
+		}
+
 		return [
 			'meta_data' => [
 				'get' => "/empresa/{$this->getId()}",
@@ -265,6 +278,10 @@ class Empresa implements DTOInterface
 				'cnpj_mascara' => $this->getCnpjComMascara(),
 				'data_fundacao' => $this->tDataFundacao->format("Y-m-d"),
 				'data_fundacao_ptbr' => $this->getDataFundacaoPtbr(),
+				'data_criacao' => $this->tDataCriacao->format("Y-m-d H:i:s"),
+				'data_criacao_ptbr' => $this->tDataCriacao->format("d/m/Y H:i:s"),
+				'data_atualizacao' => $sDataAtualizacao,
+				'data_atualizacao_ptbr' => $sDataAtualizacaoPtbr,
 			]
 		];
 	}
