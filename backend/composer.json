@@ -52,7 +52,7 @@
     "scripts": {
 		"run-server": [
 			"docker-compose up -d",
-			"symfony serve --port=9001",
+			"symfony serve --port=9001 -d",
 			"@run-migrations"
 		],
 		"make-migration": [
