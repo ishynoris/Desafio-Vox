@@ -1,0 +1,21 @@
+<div class="container-form">
+	<form [formGroup]="form">
+		<mat-form-field>
+			<mat-label>Nome</mat-label>
+			<input type="text" matInput formControlName="nome">
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>CNPJ</mat-label>
+			<input type="text" matInput formControlName="cnpj">
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Data de Fundação</mat-label>
+			<input matInput [matDatepicker]="calendario" formControlName="dataFundacao">
+			<mat-datepicker-toggle matSuffix [for]="calendario"></mat-datepicker-toggle>
+			<mat-datepicker #calendario></mat-datepicker>
+		</mat-form-field>
+	</form>
+	<div class="div-save-button">
+		<button href="#" mat-raised-button (click)="onSalvar()">Salvar</button>
+	</div>
+</div>
