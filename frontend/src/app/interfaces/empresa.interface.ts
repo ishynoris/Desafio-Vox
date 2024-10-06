@@ -13,3 +13,9 @@ export interface Empresa {
 	data_atualizacao_ptbr: string
 	meta_data: MetaData;
 }
+
+export interface PayloadEmpresa {
+	nome: string,
+	cnpj: string,
+	data_fundacao: string | null
+}

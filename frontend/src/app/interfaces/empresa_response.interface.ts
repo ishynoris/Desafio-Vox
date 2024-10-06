@@ -5,3 +5,8 @@ export interface EmpresaListResponse {
 	message: string,
 	data: Array<Empresa>;
 }
+
+export interface EmpresaResponse {
+	message: string,
+	data: Empresa;
+}
