@@ -50,13 +50,18 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+		"run-server": [
+			"docker-compose up -d",
+			"symfony serve --port=9001",
+			"@run-migrations"
+		],
 		"make-migration": [
 			"symfony console make:migration",
 			"@run-migrations"
 		],
-		"run-migrations": {
-			"run": "symfony console doctrine:migrations:migrate"
-		},
+		"run-migrations": [
+			"symfony console doctrine:migrations:migrate --no-interaction"
+		],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
