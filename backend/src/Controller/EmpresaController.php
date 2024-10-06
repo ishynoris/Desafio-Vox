@@ -129,7 +129,7 @@ class EmpresaController extends AbstractController
 	 * @author Anailson Mota mota.a.santos@gmail.com
 	 * @since 1.0.0
 	 */
-	#[Route("/{iId}", name: "empresa_editar", methods: [ 'DELETE' ])]
+	#[Route("/{iId}", name: "empresa_apagar", methods: [ 'DELETE' ])]
 	public function apagar(int $iId): Response {
 		try {
 			$oEmpresa = $this->oRepository->apagar($iId);
