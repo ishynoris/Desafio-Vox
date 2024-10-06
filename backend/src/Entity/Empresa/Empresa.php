@@ -271,18 +271,16 @@ class Empresa implements DTOInterface
 				'put' => "/empresa/{$this->getId()}",
 				'delete' => "/empresa/{$this->getId()}",
 			],
-			'empresa' => [
-				'id' => $this->getId(),
-				'nome' => $this->getNome(),
-				'cnpj' => $this->sCnpj,
-				'cnpj_mascara' => $this->getCnpjComMascara(),
-				'data_fundacao' => $this->tDataFundacao->format("Y-m-d"),
-				'data_fundacao_ptbr' => $this->getDataFundacaoPtbr(),
-				'data_criacao' => $this->tDataCriacao->format("Y-m-d H:i:s"),
-				'data_criacao_ptbr' => $this->tDataCriacao->format("d/m/Y H:i:s"),
-				'data_atualizacao' => $sDataAtualizacao,
-				'data_atualizacao_ptbr' => $sDataAtualizacaoPtbr,
-			]
+			'id' => $this->getId(),
+			'nome' => $this->getNome(),
+			'cnpj' => $this->sCnpj,
+			'cnpj_mascara' => $this->getCnpjComMascara(),
+			'data_fundacao' => $this->tDataFundacao->format("Y-m-d"),
+			'data_fundacao_ptbr' => $this->getDataFundacaoPtbr(),
+			'data_criacao' => $this->tDataCriacao->format("Y-m-d H:i:s"),
+			'data_criacao_ptbr' => $this->tDataCriacao->format("d/m/Y H:i:s"),
+			'data_atualizacao' => $sDataAtualizacao,
+			'data_atualizacao_ptbr' => $sDataAtualizacaoPtbr,
 		];
 	}
 }

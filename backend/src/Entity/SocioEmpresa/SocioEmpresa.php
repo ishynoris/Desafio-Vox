@@ -254,20 +254,18 @@ class SocioEmpresa implements DTOInterface {
 				'put' => "/socio/{$this->iId}",
 				'delete' => "/socio/{$this->iId}",
 			],
-			'socio' => [
-				'id' => $this->iId,
-				'empresa_id' => $this->oEmpresa->getId(),
-				'empresa' => $this->oEmpresa->toArray(),
-				'nome' => $this->sNome,
-				'cpf' => $this->sCpf,
-				'cpf_mascara' => $this->getCpfComMascara(),
-				'data_vinculo' => $this->tDataVinculo->format("Y-m-d"),
-				'data_vinculo_ptbr' => $this->tDataVinculo->format("d/m/Y"),
-				'data_criacao' => $this->tDataCriacao->format("Y-m-d H:i:s"),
-				'data_criacao_ptbr' => $this->tDataCriacao->format("d/m/Y H:i:s"),
-				'data_atualizacao' => $sDataAtualizacao,
-				'data_atualizacao_ptbr' => $sDataAtualizacaoPtbr,
-			]
+			'id' => $this->iId,
+			'empresa_id' => $this->oEmpresa->getId(),
+			'empresa' => $this->oEmpresa->toArray(),
+			'nome' => $this->sNome,
+			'cpf' => $this->sCpf,
+			'cpf_mascara' => $this->getCpfComMascara(),
+			'data_vinculo' => $this->tDataVinculo->format("Y-m-d"),
+			'data_vinculo_ptbr' => $this->tDataVinculo->format("d/m/Y"),
+			'data_criacao' => $this->tDataCriacao->format("Y-m-d H:i:s"),
+			'data_criacao_ptbr' => $this->tDataCriacao->format("d/m/Y H:i:s"),
+			'data_atualizacao' => $sDataAtualizacao,
+			'data_atualizacao_ptbr' => $sDataAtualizacaoPtbr,
 		];
 	}
 }
