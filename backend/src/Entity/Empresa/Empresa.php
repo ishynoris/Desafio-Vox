@@ -177,7 +177,7 @@ class Empresa implements DTOInterface
 			substr($this->sCnpj, 2, 3),
 			substr($this->sCnpj, 5, 3),
 			substr($this->sCnpj, 8, 4),
-			substr($this->sCnpj, 11, 2),
+			substr($this->sCnpj, 12, 2),
 		];
         return sprintf("%s.%s.%s/%s-%s", ...$aPartes);
     }
