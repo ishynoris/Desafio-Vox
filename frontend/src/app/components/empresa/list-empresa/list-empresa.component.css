@@ -1,0 +1,18 @@
+.container-table {
+	margin: 20px;
+}
+
+.container-table table {
+	width: 100%;
+	padding: 5px;
+}
+
+.container-table button {
+	margin: 16px 8px;
+}
+
+.div-add-button {
+	display: flex;
+	justify-content: flex-end;
+	padding-bottom: 8px;
+}
