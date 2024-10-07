@@ -78,7 +78,7 @@ class Empresa implements DTOInterface
 		$sCnpj = $aEmpresa['cnpj'] ?? "";
 
 		try {
-			$sDataFundacao = $aEmpresa['data_fundcao'] ?? "";
+			$sDataFundacao = $aEmpresa['data_fundacao'] ?? "";
 			$tDataFundacao = empty($sDataFundacao) ? null : new DateTimeImmutable($sDataFundacao);
 		} catch (Throwable $e) {
 			$tDataFundacao = null;
