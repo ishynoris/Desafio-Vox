@@ -29,7 +29,7 @@ export class ListaSocioComponent {
 	}
 
 	onEdit(socio: Socio) {
-		this.router.navigateByUrl(`/editar-socio/${socio.id}`)
+		this.router.navigateByUrl(`/socio/${socio.id}`)
 	}
 
 	onApagar(socio: Socio) {

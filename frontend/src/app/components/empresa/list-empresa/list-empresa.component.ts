@@ -29,7 +29,7 @@ export class ListEmpresaComponent {
 	}
 
 	onEdit(empresa: Empresa) {
-		this.router.navigateByUrl(`/editar-empresa/${empresa.id}`)
+		this.router.navigateByUrl(`/empresa/${empresa.id}`)
 	}
 
 	onApagar(empresa: Empresa) {

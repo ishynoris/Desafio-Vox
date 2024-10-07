@@ -10,7 +10,7 @@ import { RouteResolverService } from './services/route-resolver.service';
 export const routes: Routes = [ 
 	{ path: "", component: ListEmpresaComponent },
 	{ 
-		path: "editar-empresa/:id", 
+		path: "empresa/:id", 
 		component: EditarEmpresaComponent,
 		resolve: { empresa: RouteResolverService.empresa }
 	},
@@ -18,7 +18,7 @@ export const routes: Routes = [
 	{ path: "socios", component: ListaSocioComponent },
 	{ path: "novo-socio", component: NovoSocioComponent},
 	{ 
-		path: "editar-socio/:id", 
+		path: "socio/:id", 
 		component: EditarSocioComponent,
 		resolve: { socio: RouteResolverService.socio }
 	}
