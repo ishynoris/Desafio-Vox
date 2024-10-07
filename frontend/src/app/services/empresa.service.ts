@@ -10,15 +10,15 @@ import { Observable } from 'rxjs';
 export class EmpresaService {
 
 	httpClient = inject(HttpClient);
-  baseUrlApi = "/api/v1";
+  baseUrlApi = "/api/v1/empresa/";
 
   getAll(): Observable<EmpresaListResponse> {
-    const url = this.baseUrlApi.concat("/empresa");
+    const url = this.baseUrlApi;
     return this.httpClient.get<EmpresaListResponse>(url);
   }
 
   salvar(empresa: PayloadEmpresa): Observable<EmpresaResponse> {
-    const url = this.baseUrlApi.concat("/empresa");
+    const url = this.baseUrlApi;
     return this.httpClient.post<EmpresaResponse>(url, empresa);
   }
 }
