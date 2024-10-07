@@ -4,6 +4,7 @@ namespace App\Entity\Empresa;
 
 use App\Repository\EmpresaRepository;
 use App\Resources\Interfaces\DTOInterface;
+use App\Resources\Utils;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
@@ -79,7 +80,7 @@ class Empresa implements DTOInterface
 
 		try {
 			$sDataFundacao = $aEmpresa['data_fundacao'] ?? "";
-			$tDataFundacao = empty($sDataFundacao) ? null : new DateTimeImmutable($sDataFundacao);
+			$tDataFundacao = Utils::createDateTime($sDataFundacao);
 		} catch (Throwable $e) {
 			$tDataFundacao = null;
 		}
