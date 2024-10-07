@@ -1,10 +1,11 @@
-import { Component, EventEmitter, input, InputSignal, Output } from '@angular/core';
+import { Component, EventEmitter, inject, input, InputSignal, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Empresa, PayloadEmpresa } from '../../../interfaces/empresa.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-empresa',
@@ -24,6 +25,8 @@ export class FormEmpresaComponent {
 	form!: FormGroup;
 	empresa!: Empresa | undefined;
 	empresaSignal: InputSignal<Empresa | undefined> = input<Empresa | undefined>();
+	router = inject(Router);
+
 	@Output() eventConfirmacao = new EventEmitter<PayloadEmpresa>();
 
 	ngOnInit() {
@@ -40,6 +43,10 @@ export class FormEmpresaComponent {
 			}),
 			dataFundacao: new FormControl<string>(this._getDataFundacao())
 		})
+	}
+
+	onVoltar() {
+		this.router.navigateByUrl("");
 	}
 
 	onConfirm() {
