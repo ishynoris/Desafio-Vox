@@ -7,8 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { EmpresaService } from '../../../services/empresa.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { Empresa, PayloadEmpresa } from '../../../interfaces/empresa.interface';
-import { EmpresaResponse } from '../../../interfaces/empresa_response.interface';
+import { Empresa, EmpresaResponse, PayloadEmpresa } from '../../../interfaces/empresa.interface';
 import { FormEmpresaComponent } from "../form-empresa/form-empresa.component";
 
 @Component({

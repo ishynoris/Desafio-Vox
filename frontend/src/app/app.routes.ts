@@ -4,8 +4,8 @@ import { NovaEmpresaComponent } from './components/empresa/nova-empresa/nova-emp
 import { inject } from '@angular/core';
 import { EmpresaService } from './services/empresa.service';
 import { EditarEmpresaComponent } from './components/empresa/editar-empresa/editar-empresa.component';
-import { EmpresaResponse } from './interfaces/empresa_response.interface';
 import { Observable } from 'rxjs';
+import { EmpresaResponse } from './interfaces/empresa.interface';
 
 const ResolverEmpresa = {
 	empresa: (route: ActivatedRouteSnapshot): Observable<EmpresaResponse> => {

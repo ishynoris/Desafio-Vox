@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { EmpresaListResponse, EmpresaResponse } from "../interfaces/empresa_response.interface";
-import { PayloadEmpresa } from '../interfaces/empresa.interface';
+import { EmpresaListResponse, EmpresaResponse, PayloadEmpresa } from '../interfaces/empresa.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({

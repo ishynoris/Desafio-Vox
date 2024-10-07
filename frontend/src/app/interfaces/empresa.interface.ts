@@ -19,3 +19,14 @@ export interface PayloadEmpresa {
 	cnpj: string,
 	data_fundacao: string | null
 }
+
+export interface EmpresaListResponse {
+	total: number,
+	message: string,
+	data: Array<Empresa>;
+}
+
+export interface EmpresaResponse {
+	message: string,
+	data: Empresa;
+}
