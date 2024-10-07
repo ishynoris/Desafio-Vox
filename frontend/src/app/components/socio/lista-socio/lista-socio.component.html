@@ -1,0 +1,34 @@
+<div class="container-table">
+
+	<div class="div-add-button">
+		<a href="/novo-socio" mat-raised-button>Adicionar </a>
+	</div>
+	<table mat-table [dataSource]="socios" class="mat-elevation-z8">
+		<ng-container matColumnDef="empresa">
+			<th mat-header-cell *matHeaderCellDef> Empresa </th>
+			<td mat-cell *matCellDef="let socio"> {{ socio.empresa.nome }} </td>
+		</ng-container>
+		<ng-container matColumnDef="nome">
+			<th mat-header-cell *matHeaderCellDef> Nome </th>
+			<td mat-cell *matCellDef="let socio"> {{ socio.nome }} </td>
+		</ng-container>
+		<ng-container matColumnDef="cpf">
+			<th mat-header-cell *matHeaderCellDef> CPF </th>
+			<td mat-cell *matCellDef="let socio"> {{ socio.cpf_mascara }} </td>
+		</ng-container>
+		<ng-container matColumnDef="dataVinculo">
+			<th mat-header-cell *matHeaderCellDef>Data de Vínculo</th>
+			<td mat-cell *matCellDef="let empresa"> {{ empresa.data_vinculo_ptbr }} </td>
+		</ng-container>
+		<ng-container matColumnDef="acoes">
+			<th mat-header-cell *matHeaderCellDef style="width: 15%;">Ações</th>
+			<td mat-cell *matCellDef="let empresa">
+				<button mat-button (click)="onEdit(empresa)">editar</button>
+				<button mat-button (click)="onApagar(empresa)">apagar</button>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="columns"></tr>
+		<tr mat-row *matRowDef="let row; columns: columns;"></tr>
+	</table>
+</div>

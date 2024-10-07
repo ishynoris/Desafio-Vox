@@ -6,6 +6,8 @@ import { EmpresaService } from './services/empresa.service';
 import { EditarEmpresaComponent } from './components/empresa/editar-empresa/editar-empresa.component';
 import { Observable } from 'rxjs';
 import { EmpresaResponse } from './interfaces/empresa.interface';
+import { FormSocioComponent } from './components/socio/form-socio/form-socio.component';
+import { ListaSocioComponent } from './components/socio/lista-socio/lista-socio.component';
 
 const ResolverEmpresa = {
 	empresa: (route: ActivatedRouteSnapshot): Observable<EmpresaResponse> => {
@@ -23,5 +25,6 @@ export const routes: Routes = [
 		component: EditarEmpresaComponent,
 		resolve: ResolverEmpresa
 	},
-	{ path: "nova-empresa", component: NovaEmpresaComponent }
+	{ path: "nova-empresa", component: NovaEmpresaComponent },
+	{ path: "socios", component: ListaSocioComponent },
 ];
