@@ -17,6 +17,16 @@ export class EmpresaService {
     return this.httpClient.get<EmpresaListResponse>(url);
   }
 
+  getById(id: string): Observable<EmpresaResponse> {
+    const url = this.baseUrlApi.concat(id);
+    return this.httpClient.get<EmpresaResponse>(url);
+  }
+
+  atualizar(id: number, empresa: PayloadEmpresa): Observable<EmpresaResponse> {
+    const url = this.baseUrlApi + id;
+    return this.httpClient.put<EmpresaResponse>(url, empresa);
+  }
+
   salvar(empresa: PayloadEmpresa): Observable<EmpresaResponse> {
     const url = this.baseUrlApi;
     return this.httpClient.post<EmpresaResponse>(url, empresa);
