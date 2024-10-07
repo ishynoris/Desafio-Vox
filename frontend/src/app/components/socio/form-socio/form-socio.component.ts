@@ -47,7 +47,7 @@ export class FormSocioComponent {
 
 		this.socio = this.socioSig();
 		this.form = new FormGroup({
-			idEmpresa: new FormControl<number | null>(this.socio?.empresa_id || null, {
+			idEmpresa: new FormControl<string>(this.socio?.empresa.nome || "", {
 				nonNullable: true,
 				validators: Validators.required,
 			}),

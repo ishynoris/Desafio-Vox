@@ -18,13 +18,13 @@
 		</ng-container>
 		<ng-container matColumnDef="dataVinculo">
 			<th mat-header-cell *matHeaderCellDef>Data de Vínculo</th>
-			<td mat-cell *matCellDef="let empresa"> {{ empresa.data_vinculo_ptbr }} </td>
+			<td mat-cell *matCellDef="let socio"> {{ socio.data_vinculo_ptbr }} </td>
 		</ng-container>
 		<ng-container matColumnDef="acoes">
 			<th mat-header-cell *matHeaderCellDef style="width: 15%;">Ações</th>
-			<td mat-cell *matCellDef="let empresa">
-				<button mat-button (click)="onEdit(empresa)">editar</button>
-				<button mat-button (click)="onApagar(empresa)">apagar</button>
+			<td mat-cell *matCellDef="let socio">
+				<button mat-button (click)="onEdit(socio)">editar</button>
+				<button mat-button (click)="onApagar(socio)">apagar</button>
 			</td>
 		</ng-container>
 
