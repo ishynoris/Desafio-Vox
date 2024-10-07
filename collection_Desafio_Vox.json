@@ -1,0 +1,296 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Desafio Vox",
+    "collectionId": "40bde00d-a81c-4244-a917-7a020fb97369",
+    "dateExported": "2024-10-07T23:22:17.911Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "e9c56ed0-8999-4b31-8aa1-9072364c0f54",
+            "name": "Empresa",
+            "containerId": "",
+            "created": "2024-10-07T23:21:17.540Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "6e9a8333-2abd-4d33-9284-5e4de4f4175f",
+            "name": "Socio",
+            "containerId": "",
+            "created": "2024-10-07T23:21:53.646Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "9024845f-890f-4fc7-b073-fdfd28e6dd98",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "e9c56ed0-8999-4b31-8aa1-9072364c0f54",
+            "name": "Consulta empresa pelo ID",
+            "url": "{{base_url}}/{{api_version}}/empresa/2?XDEBUG_SESSION=vscode",
+            "method": "GET",
+            "sortNum": 7500,
+            "created": "2024-10-07T23:21:26.565Z",
+            "modified": "2024-10-07T23:21:26.565Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "100d8cb4-d8ca-4510-8dd1-ae2b85dbc8a2",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "e9c56ed0-8999-4b31-8aa1-9072364c0f54",
+            "name": "Listar todas empresas",
+            "url": "{{base_url}}/{{api_version}}/empresa/?XDEBUG_SESSION=vscode",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-10-07T23:21:25.019Z",
+            "modified": "2024-10-07T23:21:25.019Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "bb77b2f8-fef1-4171-a53a-f030cc0b97f6",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "6e9a8333-2abd-4d33-9284-5e4de4f4175f",
+            "name": "Lista todos os sócio",
+            "url": "{{base_url}}/{{api_version}}/socio/?XDEBUG_SESSION=vscode",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-10-07T23:21:59.599Z",
+            "modified": "2024-10-07T23:21:59.599Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "7a8c93a3-2967-46b6-9700-c1835b5b402d",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "e9c56ed0-8999-4b31-8aa1-9072364c0f54",
+            "name": "Cadastra uma empresa",
+            "url": "{{base_url}}/{{api_version}}/empresa/?XDEBUG_SESSION=vscode",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-10-07T23:21:33.178Z",
+            "modified": "2024-10-07T23:21:33.178Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Empresa criada via API\",\n  \"cnpj\": \"67.360.396/0001-59\",\n  \"data_fundacao\": \"31/12/3000\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "28d91934-2cd5-4e2e-8124-fa1b1087f7d1",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "6e9a8333-2abd-4d33-9284-5e4de4f4175f",
+            "name": "Consulta um sócio pelo seu ID",
+            "url": "{{base_url}}/{{api_version}}/socio/2?XDEBUG_SESSION=vscode",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-10-07T23:22:01.194Z",
+            "modified": "2024-10-07T23:22:01.194Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "b438a184-a56d-4198-9441-0242fff879ac",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "e9c56ed0-8999-4b31-8aa1-9072364c0f54",
+            "name": "Atualizar os campos de uma empresa",
+            "url": "{{base_url}}/{{api_version}}/empresa/1?XDEBUG_SESSION=vscode",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-10-07T23:21:38.090Z",
+            "modified": "2024-10-07T23:21:38.090Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Nome nome 2.0\",\n  \"cnpj\": \"05.549.870/0001-38\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "2042a5c4-e592-43f0-8182-758fa8ed3e5c",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "6e9a8333-2abd-4d33-9284-5e4de4f4175f",
+            "name": "Cadastra um novo sócio",
+            "url": "{{base_url}}/{{api_version}}/socio/?XDEBUG_SESSION=vscode",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-10-07T23:22:02.462Z",
+            "modified": "2024-10-07T23:22:02.462Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"empresa_id\": 1,\n  \"nome\": \"Novo Sócio Sem Nome\",\n  \"cpf\": \"035.399.335-22\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "82178ae7-9846-4333-a7bf-239483b2e98e",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "e9c56ed0-8999-4b31-8aa1-9072364c0f54",
+            "name": "Apaga uma empresa",
+            "url": "{{base_url}}/{{api_version}}/empresa/2?XDEBUG_SESSION=vscode",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-10-07T23:21:41.397Z",
+            "modified": "2024-10-07T23:21:41.397Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "8fc45a37-7132-4490-89a8-6ca683b0bbe5",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "6e9a8333-2abd-4d33-9284-5e4de4f4175f",
+            "name": "Atualizar as informações de um sócio",
+            "url": "{{base_url}}/{{api_version}}/socio/2?XDEBUG_SESSION=vscode",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-10-07T23:22:03.665Z",
+            "modified": "2024-10-07T23:22:03.665Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Socio com nome atualizado mais uma vez\",\n  \"cpf\": \"035.399.335-22\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "9247347a-fa23-42fc-84a3-12e70504def3",
+            "colId": "40bde00d-a81c-4244-a917-7a020fb97369",
+            "containerId": "6e9a8333-2abd-4d33-9284-5e4de4f4175f",
+            "name": "Apaga um sócio pelo ID",
+            "url": "{{base_url}}/{{api_version}}/socio/16?XDEBUG_SESSION=vscode",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-10-07T23:22:05.853Z",
+            "modified": "2024-10-07T23:22:05.853Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "XDEBUG_SESSION",
+                    "value": "vscode",
+                    "isPath": false
+                }
+            ]
+        }
+    ],
+    "ref": "HgDosr5AQfhRVenS1w442pmB0qrFBk1b78vjWY-psW38yKzjEVbRBUloNMzNxGhYvJcazFqzIGIEpUJ4-Jgefw"
+}
