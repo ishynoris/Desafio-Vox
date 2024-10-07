@@ -31,4 +31,9 @@ export class EmpresaService {
     const url = this.baseUrlApi;
     return this.httpClient.post<EmpresaResponse>(url, empresa);
   }
+
+  apagar(id: number): Observable<EmpresaResponse> {
+    const url = this.baseUrlApi + id;
+    return this.httpClient.delete<EmpresaResponse>(url);
+  }
 }
