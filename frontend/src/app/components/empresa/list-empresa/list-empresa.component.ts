@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CustomDialogSevice } from '../../dialog/custom-dialog/custom-dialog.service';
+import { CustomDialogService } from '../../dialog/custom-dialog/custom-dialog.service';
 
 @Component({
   selector: 'app-list-empresa',
@@ -21,7 +21,7 @@ export class ListEmpresaComponent {
 
 	service = inject(EmpresaService);
 	router = inject(Router);
-	dialog = inject(CustomDialogSevice);
+	dialog = inject(CustomDialogService);
 	snackBar = inject(MatSnackBar);
 
 	ngOnInit() {
@@ -33,7 +33,9 @@ export class ListEmpresaComponent {
 	}
 
 	onApagar(empresa: Empresa) {
-		this.dialog.onOpen().subscribe(confirm => {
+		this.dialog.onOpen({
+			title: empresa.nome,
+		}).subscribe(confirm => {
 			if (!confirm) {
 				return;
 			}

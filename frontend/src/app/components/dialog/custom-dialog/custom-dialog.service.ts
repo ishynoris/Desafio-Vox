@@ -6,19 +6,20 @@ import { Observable } from 'rxjs';
 
 
 interface DialogData {
-	title: string,
+	title?: string
 }
 
 @Injectable({
 	providedIn: 'root'
 })
-export class CustomDialogSevice {
+export class CustomDialogService {
 	
 	dialog = inject(MatDialog);
 
-	onOpen(): Observable<boolean> {
+	onOpen(data?: DialogData): Observable<boolean> {
 		return this.dialog
 			.open(CustomDialogComponent, {
+				data: data,
 				width: "500px",
 			})
 			.afterClosed();
@@ -32,8 +33,8 @@ export class CustomDialogSevice {
 	template: `
 		<h2 mat-dialog-title>Confirmação</h2>
 		<mat-dialog-content>
-			<p>Deseja realmente apagar</p>
-			<h2>{{ this.data.title }}</h2>
+			<p>Deseja realmente apagar?</p>
+			<p>{{ this.data.title }}</p>
 		</mat-dialog-content>
 		<mat-dialog-actions>
 			<button mat-button (click)="onNao()">Não</button>

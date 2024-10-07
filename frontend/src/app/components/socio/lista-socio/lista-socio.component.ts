@@ -5,6 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SocioService } from '../../../services/socio.service';
 import { Router } from '@angular/router';
+import { CustomDialogService } from '../../dialog/custom-dialog/custom-dialog.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lista-socio',
@@ -19,6 +21,8 @@ export class ListaSocioComponent {
 	columns: string[] = [ "empresa", "nome", "cpf", "dataVinculo", "acoes" ];
 	service = inject(SocioService);
 	router = inject(Router);
+	dialogService = inject(CustomDialogService);
+	snackBar = inject(MatSnackBar);
 
 	ngOnInit() {
 		this._loadEmpresas();
@@ -29,9 +33,26 @@ export class ListaSocioComponent {
 	}
 
 	onApagar(socio: Socio) {
-
+		console.log(socio);
+		this.dialogService
+			.onOpen({
+				title: `${socio.nome}: ${socio.cpf_mascara}`,
+			}).subscribe(confirm => {
+				this._apagar(socio.id);
+			});
 	}
 	private _loadEmpresas() {
 		this.service.getAll().subscribe(resp => this.socios = resp.data);
+	}
+
+	private _apagar(id: number) {
+		this.service.apagar(id).subscribe(response => {
+			this.snackBar.open(response.message, "Fechar", {
+				duration: 3000,
+				verticalPosition: "top",
+				horizontalPosition: "end"
+			});
+			this._loadEmpresas();
+		});
 	}
 }
