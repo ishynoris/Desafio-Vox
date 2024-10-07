@@ -11,6 +11,7 @@ import { EmpresaService } from '../../../services/empresa.service';
 import { Empresa } from '../../../interfaces/empresa.interface';
 import { MatOptionModule } from '@angular/material/core';
 import { NgFor } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form-socio',
@@ -33,8 +34,9 @@ export class FormSocioComponent {
 	@Output() eventConfirmacao = new EventEmitter<PayloadSocio>();
 
 	empresas: Array<Empresa> = [];
-	selectEmpresa: number = 0;
+	selectEmpresa!: number | undefined;
 
+	snackBar = inject(MatSnackBar);
 	router = inject(Router);
 	empresaService = inject(EmpresaService);
 	socioSig = input<Socio | undefined>();
@@ -46,6 +48,8 @@ export class FormSocioComponent {
 		this._loadEmpresas();
 
 		this.socio = this.socioSig();
+		this.selectEmpresa = this.socio?.empresa_id;
+
 		this.form = new FormGroup({
 			idEmpresa: new FormControl<string>(this.socio?.empresa.nome || "", {
 				nonNullable: true,
@@ -68,6 +72,15 @@ export class FormSocioComponent {
 	}
 
 	onConfirm() {
+		if (this.selectEmpresa == undefined) {
+			this.snackBar.open("Selecione uma empresa para continuar", "Fechar", {
+				duration: 3000,
+				verticalPosition: "top",
+				horizontalPosition: "end"
+			});
+			return;
+		}
+
 		const controls = this.form.controls;
 		this.eventConfirmacao.emit({
 			empresa_id: this.selectEmpresa,

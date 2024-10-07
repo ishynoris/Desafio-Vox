@@ -1,30 +1,25 @@
 import { ActivatedRouteSnapshot, RedirectCommand, RouterStateSnapshot, Routes } from '@angular/router';
 import { ListEmpresaComponent } from './components/empresa/list-empresa/list-empresa.component';
 import { NovaEmpresaComponent } from './components/empresa/nova-empresa/nova-empresa.component';
-import { inject } from '@angular/core';
-import { EmpresaService } from './services/empresa.service';
 import { EditarEmpresaComponent } from './components/empresa/editar-empresa/editar-empresa.component';
-import { Observable } from 'rxjs';
-import { EmpresaResponse } from './interfaces/empresa.interface';
-import { FormSocioComponent } from './components/socio/form-socio/form-socio.component';
 import { ListaSocioComponent } from './components/socio/lista-socio/lista-socio.component';
-
-const ResolverEmpresa = {
-	empresa: (route: ActivatedRouteSnapshot): Observable<EmpresaResponse> => {
-		const id = route.paramMap.get("id") as string;
-		const empresaService = inject(EmpresaService);
-		return empresaService.getById(id);
-	}
-}
-
+import { NovoSocioComponent } from './components/socio/novo-socio/novo-socio.component';
+import { EditarSocioComponent } from './components/socio/editar-socio/editar-socio.component';
+import { RouteResolverService } from './services/route-resolver.service';
 
 export const routes: Routes = [ 
 	{ path: "", component: ListEmpresaComponent },
 	{ 
 		path: "editar-empresa/:id", 
 		component: EditarEmpresaComponent,
-		resolve: ResolverEmpresa
+		resolve: { empresa: RouteResolverService.empresa }
 	},
 	{ path: "nova-empresa", component: NovaEmpresaComponent },
 	{ path: "socios", component: ListaSocioComponent },
+	{ path: "novo-socio", component: NovoSocioComponent},
+	{ 
+		path: "editar-socio/:id", 
+		component: EditarSocioComponent,
+		resolve: { socio: RouteResolverService.socio }
+	}
 ];
