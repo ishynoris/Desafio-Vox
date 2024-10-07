@@ -7,17 +7,20 @@ import { MatInputModule } from '@angular/material/input';
 import { EmpresaService } from '../../../services/empresa.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { FormEmpresaComponent } from "../form-empresa/form-empresa.component";
+import { PayloadEmpresa } from '../../../interfaces/empresa.interface';
 
 @Component({
   selector: 'app-nova-empresa',
   standalone: true,
-  imports: [ 
-	ReactiveFormsModule, 
-	MatFormFieldModule, 
-	MatInputModule, 
-	MatDatepickerModule, 
-	MatButtonModule 
-  ],
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    FormEmpresaComponent
+],
   templateUrl: './nova-empresa.component.html',
   styleUrl: './nova-empresa.component.css'
 })
@@ -38,16 +41,12 @@ export class NovaEmpresaComponent {
 		dataFundacao: new FormControl<string>("")
 	})
 
-	onSalvar() {
-		this.service.salvar({
-			nome: this.form.controls.nome.value,
-			cnpj: this.form.controls.cnpj.value,
-			data_fundacao: this.form.controls.dataFundacao.value
-		}).subscribe(resp => {
+	onSalvar(payload: PayloadEmpresa) {
+		this.service.salvar(payload).subscribe(resp => {
 			this.snackBar.open(resp.message, "Fechar", {
 				duration: 3000,
-				verticalPosition: "bottom",
-				horizontalPosition: "start"
+				verticalPosition: "top",
+				horizontalPosition: "end"
 			});
 			this.router.navigateByUrl("/");
 		});

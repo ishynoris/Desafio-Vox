@@ -6,20 +6,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { EmpresaService } from '../../../services/empresa.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Empresa } from '../../../interfaces/empresa.interface';
+import { ActivatedRoute } from '@angular/router';
+import { Empresa, PayloadEmpresa } from '../../../interfaces/empresa.interface';
 import { EmpresaResponse } from '../../../interfaces/empresa_response.interface';
+import { FormEmpresaComponent } from "../form-empresa/form-empresa.component";
 
 @Component({
   selector: 'app-editar-empresa',
   standalone: true,
-  imports: [ 
-	ReactiveFormsModule, 
-	MatFormFieldModule, 
-	MatInputModule, 
-	MatDatepickerModule, 
-	MatButtonModule 
-  ],
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    FormEmpresaComponent
+],
   templateUrl: './editar-empresa.component.html',
   styleUrl: './editar-empresa.component.css'
 })
@@ -44,16 +46,13 @@ export class EditarEmpresaComponent {
 		)
 	})
 
-	onSalvar(id: number) {
-		this.service.atualizar(id, {
-			nome: this.form.controls.nome.value,
-			cnpj: this.form.controls.cnpj.value,
-			data_fundacao: this.form.controls.dataFundacao.value
-		}).subscribe(resp => {
+	onAtualizar(payload: PayloadEmpresa) {
+		const id = this.empresa.id;
+		this.service.atualizar(id, payload).subscribe(resp => {
 			this.snackBar.open(resp.message, "Fechar", {
 				duration: 3000,
-				verticalPosition: "bottom",
-				horizontalPosition: "start"
+				verticalPosition: "top",
+				horizontalPosition: "end"
 			});
 		});
 	}
