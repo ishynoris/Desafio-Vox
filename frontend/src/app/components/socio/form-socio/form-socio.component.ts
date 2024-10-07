@@ -68,7 +68,7 @@ export class FormSocioComponent {
 	}
 
 	onVoltar() {
-		this.router.navigateByUrl("");
+		this.router.navigateByUrl("/socios");
 	}
 
 	onConfirm() {
